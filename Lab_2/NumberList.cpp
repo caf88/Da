@@ -15,15 +15,31 @@ bool NumberList::Add(int x)
 	
 }
 
+int partition(int arr, int low, int high) 
+{
+	int piv = arr[high];
+	int i = low - 1;
+	for (int j = low; j <= high - 1; j++) {
+		if (arr[j] < pivot) {
+			i++;
+			swap(arr[i], arr[j]);
+		}
+	}
+	swap(arr[i + 1], arr[high]);
+	return i + 1;
+}
+void quick(int arr, int low, int high) {
+	if (low < high) 
+	{
+		int par = partition(arr, low, high);
+		quick(arr, low, par - 1);
+		quick(arr, par + 1, high);
+	}
+}
+
 void NumberList::Sort()
 {
-    for(int i=0;i<count-1;i++)
-		for (int j = i + 1; j < count; j++)
-		if(numbers[i]>numbers[j]) {
-			int aux = numbers[i];
-			numbers[i] = numbers[j];
-			numbers[j] = aux;
-		}
+	quick(numbers, 0, n - 1);
 }
 
 void NumberList::Print()
